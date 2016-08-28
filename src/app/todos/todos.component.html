@@ -1,0 +1,32 @@
+<div class="panel"  [ngClass]="{ 'panel-info': appState == 'default', 'panel-danger': appState == 'edit' }" >
+    <div class="panel-heading">{{appState == "default" ? "Add Todo" : "Edit Todo"}}</div>
+    <div class="panel-body">
+        <div *ngIf="appState == 'default'">
+            <form (submit)="addTodo()">
+                <input class="form-control" type="text" [(ngModel)]="text" placeholder="+ Add a todo...">
+            </form>
+        </div>
+        <div *ngIf="appState == 'edit'">
+            <form (submit)="updateTodo()">
+                <input class="form-control" type="text" [(ngModel)]="text">
+            </form>
+        </div>
+        <div class="well">
+            <h3><span class="label label-default" *ngIf="todos.length">Todo List :</span></h3>
+            <div class="alert alert-danger" role="alert" *ngIf="!todos.length">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Error:</span>
+                    You don't have any todo's
+            </div>
+            <div *ngFor="let todo of todos" class="list-group-item" >
+                <button (click)="deleteTodo(todo.id)" class="btn btn-xs btn-danger">
+                    <icon class="glyphicon glyphicon-trash"></icon>
+                </button>
+                <button (click)="editTodo(todo)" class="btn btn-xs btn-info">
+                    <icon class="glyphicon glyphicon-pencil"></icon>
+                </button>
+                <span>{{todo.text}}</span>
+            </div>
+        </div>
+    </div>
+</div>
